@@ -108,7 +108,7 @@ section {
 body {
   line-height: 1;
   /*COULEURE TEMPORAIRE POUR CONFORT DES YEUX*/
-  background-color: #232324;
+  /* background-color: #232324; */
 }
 ol,
 ul {
@@ -208,15 +208,24 @@ li:hover {
 }
 
 .div-container {
+  /*yaakov*/
+  min-width: 550px;
+  width: 50%;
   display: flex;
-  width: 70%;
-
-  justify-content: space-around;
-  margin: 0 auto;
+  justify-content: space-evenly;
+  margin: 35px auto;
 }
 .div-container > * {
-  padding: 3px;
+  padding: 10px;
   border: 1px solid #1d6154;
+  border-radius: 25px;
+  font-family: "Syne";
+  color: #1d6154;
+  cursor: pointer;
+}
+.div-container > *:hover {
+  background-color: #1d6154;
+  color: white;
 }
 .gallery {
   width: 100%;

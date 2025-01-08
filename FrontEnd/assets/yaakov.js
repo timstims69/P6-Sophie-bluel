@@ -51,9 +51,9 @@ function setFigure(data) {
 //                                   _Categories_
 
 async function getCategories() {
-  const url = "http://localhost:5678/api/categories"; // Bon url ?
+  const urlCat = "http://localhost:5678/api/categories";
   try {
-    const response = await fetch(url);
+    const response = await fetch(urlCat);
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`);
     }
@@ -70,10 +70,18 @@ async function getCategories() {
 
 getCategories();
 function setFilter(data) {
-  const divContainer = document.createElement("div");
-
   const div = document.createElement("div");
+  div.addEventListener("click", () => alert("salut"));
   div.innerHTML = `${data.name}`;
-
   document.querySelector(".div-container").append(div);
 }
+document.querySelector(".tous").addEventListener("click", () => getWorks());
+const words = ["spray", "elite", "exuberant", "destruction", "present"];
+
+const result = words.filter((word) => word.length > 6);
+
+console.log(result);
+// Expected output: Array ["exuberant", "destruction", "present"]
+
+// La stratégie est de faire un GET WORKS qui ne garde seulement que l'id dans
+// les données qui sont tirées de l'api a partir de getCategories
