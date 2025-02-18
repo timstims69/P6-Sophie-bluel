@@ -1,3 +1,5 @@
+let works = [];
+
 async function getWorks() {
   // attention code asynchrone ! CAD que certaine partie ont lieue en meme temps que d'autres au lieu d'érape par étape
   // , (Voir exemple cuisine)
@@ -12,16 +14,17 @@ async function getWorks() {
       throw new Error(`Response status: ${response.status}`);
     }
 
-    const json = await response.json(); // 3 Les données reçues du serveur est  converti en JSON,
+    works = await response.json(); // Stocker les données dans la variable globale
+    console.log(works); // Vérification des données // 3 Les données reçues du serveur est  converti en JSON,
     // la propriétée response représente la reponse du serv ensuite, .json coverti en json
     // aussi await ici veut idre que j'attend la réponse du serveur avant de la process
 
-    console.log(json); // 4 J'affiche les données dans la console, pour que je puisse les voir perso
+    console.log(); // 4 J'affiche les données dans la console, pour que je puisse les voir perso
 
-    for (let i = 0; i < json.length; i++) {
+    for (let i = 0; i < works.length; i++) {
       //5 Si y'a plusieur éléments dans les données, je boucle et donc les select 1 à 1
 
-      setFigure(json[i]); //6 Pour chaque element j'applique la fonction Setfigure,
+      setFigure(works[i]); //6 Pour chaque element j'applique la fonction Setfigure,
       // aussi le travail json lui est passé en parametre (décrite à L23)
     }
   } catch (error) {
@@ -50,6 +53,45 @@ function setFigure(data) {
 //----------------------------------------------------------------------------------
 //                                   _Categories_
 
+//Lui il sert a mettre les boutons filtres sur la page
+function sanitizeId(name) {
+  return name.replace(/[^a-zA-Z0-9-]/g, "-").toLowerCase(); // Remplace les caractères non alphanumériques par des tirets
+}
+
+function setFilter(data) {
+  const div = document.createElement("div");
+  div.innerHTML = `${data.name}`;
+  div.id = sanitizeId(data.name); // Utilise l'ID nettoyé
+  document.querySelector(".div-container").append(div);
+}
+
+// La stratégie est de faire un GET WORKS qui ne garde seulement que l'id dans
+// les données qui sont tirées de l'api a partir de getCategories
+
+//balagan a partir d'ici
+function filtration(categorie) {
+  const categorieNamePropre = sanitizeId(categorie.name); // ! ici methode sanitize!
+  const boutonObjet = document.querySelector(`#${categorieNamePropre}`);
+  if (!boutonObjet) {
+    // si je n'arrive pas a trouver le bouton  alors :
+    console.error(`Bouton introuvable pour ${categorie.name}`);
+    return;
+  }
+
+  boutonObjet.addEventListener("click", () => {
+    document.querySelector(".gallery").innerHTML = ""; // Vide la galerie
+
+    if (categorie.name === "tous") {
+      works.forEach((work) => setFigure(work));
+    } else {
+      const filteredWorks = works.filter(
+        (work) => work.categoryId === categorie.id
+      );
+      filteredWorks.forEach((work) => setFigure(work));
+    }
+  });
+}
+
 async function getCategories() {
   const urlCat = "http://localhost:5678/api/categories";
   try {
@@ -60,8 +102,14 @@ async function getCategories() {
 
     const json = await response.json();
     console.log(json);
+
+    // Ajoute une catégorie "Tous" manuellement
+    setFilter({ name: "tous", id: null });
+    filtration({ name: "tous", id: null });
+
     for (let i = 0; i < json.length; i++) {
       setFilter(json[i]);
+      filtration(json[i]);
     }
   } catch (error) {
     console.error(error.message);
@@ -69,19 +117,5 @@ async function getCategories() {
 }
 
 getCategories();
-function setFilter(data) {
-  const div = document.createElement("div");
-  div.addEventListener("click", () => alert("salut"));
-  div.innerHTML = `${data.name}`;
-  document.querySelector(".div-container").append(div);
-}
-document.querySelector(".tous").addEventListener("click", () => getWorks());
-const words = ["spray", "elite", "exuberant", "destruction", "present"];
 
-const result = words.filter((word) => word.length > 6);
-
-console.log(result);
-// Expected output: Array ["exuberant", "destruction", "present"]
-
-// La stratégie est de faire un GET WORKS qui ne garde seulement que l'id dans
-// les données qui sont tirées de l'api a partir de getCategories
+// coder c'est comme etre un chef d'orchestre
