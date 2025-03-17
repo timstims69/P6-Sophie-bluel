@@ -118,4 +118,105 @@ async function getCategories() {
 
 getCategories();
 
-// coder c'est comme etre un chef d'orchestre
+// coder c'est comme etre un chef d'orchestre, pas besoin de savoir exactement comment jouer chaque instrument,
+//il suffit de les comprendre pour les harmoniser
+
+//----------------------------------------------------------------------------------
+//                              _Mode Admin_
+
+// Ici je veut faire en sorte que le site détecte si l'admin est connecté ou pas
+
+function adminMode() {
+  let token = window.localStorage.getItem("JWT_TOKEN");
+  if (token) {
+    // document.querySelector(".js-modal-2").style.display = "block"; // ceci est un exemple, block ne "bloque pas l'affichage il l'active le mode "bloc"
+    console.log("salut l'admin, bienvenue a la maison");
+  } else {
+    // document.querySelector(".js-modal-2").style.display = "none"; // sinon tu bloque
+    console.log("T'est qui toi ?");
+  }
+}
+
+adminMode();
+
+// modale
+
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+let btn = document.getElementById("potatosalad");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal
+btn.onclick = function () {
+  modal.style.display = "block";
+};
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function () {
+  modal.style.display = "none";
+};
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+};
+console.log(modal);
+console.log(btn, "le bouton marche");
+console.log(span);
+console.log("Test: ", modal);
+
+// ajout de photo
+
+let ajouterPhoto = document.getElementById("ajouterPhoto");
+
+// sert a enlever le token du local storage
+// sinon il reste lealmé almaya
+function logout() {
+  localStorage.removeItem("JWT_TOKEN");
+}
+
+// Affichage photo dans la modal lors de l'ouverture:
+
+// Creation d'une fonction qui va récupérer les works qui va te retourner une listes des elements
+function miniImages() {
+  let content = getElementById("content");
+  fetch("http://localhost:5678/api-docs/#/default/get_works", {})
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("utilisateur Non Reconnu");
+      }
+      return response.json(); //return necessaire quand utilise une {}
+    })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((error) => {
+      console.log("Erreur dans la récupération des mini images");
+    });
+  console.log(data, "ya zebi");
+}
+
+miniImages();
+works.forEach((element) => createElement("miniPhoto"));
+// this.appendChild("content");
+
+// Pour chaque "work" création d'un child component qui sera ajouter à la div "content" afin d'afficher l'image
+// utiliser une boucle forEach pour effectuer l'action sur chaque images
+// Teapot — Today at 7:46 PM
+// liste_image.forEach((image) =>console.log(image));
+// à la place de console.log tu devras ajouter une image à la dive "content" (appendChild)
+
+// je localise oû inserer les images en html, XFaitX
+// j'en fais une variable  XFaitX   c'est la variable content
+// je fait descendre les works, XFait ? X
+// je leur met une class html, (sans ça pas de carré image il me semble,puis aussi cela donnera la taille voulue)
+// j'appendChild les images works dans la variable (2 eme étape)
+
+// petites étapes et petites tranches de temps correspondantes
+// noter les avancements

@@ -1,5 +1,5 @@
 function login() {
-  event.preventDefault();
+  event.preventDefault(); // mh zh ?
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   console.log(email, password);
@@ -23,8 +23,13 @@ function login() {
     .then((data) => {
       console.log(data.token);
       window.localStorage.setItem("JWT_TOKEN", data.token);
+      window.location.href = "index.html";
     })
-    .catch((error) => console.log("Erreur :", error));
+    .catch((error) => {
+      // Affichage du message d'erreur dans l'élément #errorMessage
+      document.getElementById("errorMessage").textContent = error.message;
+      document.getElementById("errorMessage").style.color = "red"; // Optionnel : mettre le texte en rouge
+    });
 }
 
 // window.localStorage.getItem(key); pour acces le token
