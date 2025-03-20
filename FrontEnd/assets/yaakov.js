@@ -18,7 +18,7 @@ async function getWorks() {
     console.log(works); // Vérification des données // 3 Les données reçues du serveur est  converti en JSON,
     // la propriétée response représente la reponse du serv ensuite, .json coverti en json
     // aussi await ici veut idre que j'attend la réponse du serveur avant de la process
-
+    window.localStorage.setItem("works", works);
     console.log(); // 4 J'affiche les données dans la console, pour que je puisse les voir perso
 
     for (let i = 0; i < works.length; i++) {
@@ -175,35 +175,20 @@ console.log("Test: ", modal);
 
 let ajouterPhoto = document.getElementById("ajouterPhoto");
 
-// sert a enlever le token du local storage
-// sinon il reste lealmé almaya
-function logout() {
-  localStorage.removeItem("JWT_TOKEN");
+function imageModal() {
+  let dataWorks = window.localStorage.getItem("works");
+  setminiImage(dataWorks);
 }
 
-// Affichage photo dans la modal lors de l'ouverture:
-
-// Creation d'une fonction qui va récupérer les works qui va te retourner une listes des elements
-function miniImages() {
-  let content = getElementById("content");
-  fetch("http://localhost:5678/api-docs/#/default/get_works", {})
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("utilisateur Non Reconnu");
-      }
-      return response.json(); //return necessaire quand utilise une {}
-    })
-    .then((data) => {
-      console.log(data);
-    })
-    .catch((error) => {
-      console.log("Erreur dans la récupération des mini images");
-    });
-  console.log(data, "ya zebi");
+function setminiImage(works) {
+  const content = document.getElementById("#content");
+  for (let i = 0; i < works.length; i++) {
+    content.innerHTML += `<img src =${works[i].imageUrl} alt${works[i].title}> 
+				<figcaption>${works[i].title}</figcaption>`;
+  }
 }
 
-miniImages();
-works.forEach((element) => createElement("miniPhoto"));
+// works.forEach((element) => createElement("miniPhoto"));
 // this.appendChild("content");
 
 // Pour chaque "work" création d'un child component qui sera ajouter à la div "content" afin d'afficher l'image

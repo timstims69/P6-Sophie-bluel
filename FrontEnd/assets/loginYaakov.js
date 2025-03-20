@@ -34,3 +34,10 @@ function login() {
 
 // window.localStorage.getItem(key); pour acces le token
 // https://www.w3schools.com/howto/howto_css_modals.asp
+
+// Pour plus tard :
+// sert a enlever le token du local storage
+// sinon il reste lealmé almaya
+function logout() {
+  localStorage.removeItem("JWT_TOKEN");
+}

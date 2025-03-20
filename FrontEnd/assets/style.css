@@ -510,3 +510,8 @@ footer nav ul {
 #photo-container img {
   width: 100%;
 }
+
+.miniImage {
+  width: 10%;
+  height: 10%;
+}
