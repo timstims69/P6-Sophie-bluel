@@ -15,16 +15,17 @@ async function getWorks() {
     }
 
     works = await response.json(); // Stocker les données dans la variable globale
-    console.log(works); // Vérification des données // 3 Les données reçues du serveur est  converti en JSON,
+    // Vérification des données // 3 Les données reçues du serveur est  converti en JSON,
     // la propriétée response représente la reponse du serv ensuite, .json coverti en json
     // aussi await ici veut idre que j'attend la réponse du serveur avant de la process
     window.localStorage.setItem("works", works);
-    console.log(); // 4 J'affiche les données dans la console, pour que je puisse les voir perso
+    // 4 J'affiche les données dans la console, pour que je puisse les voir perso
 
     for (let i = 0; i < works.length; i++) {
       //5 Si y'a plusieur éléments dans les données, je boucle et donc les select 1 à 1
 
       setFigure(works[i]); //6 Pour chaque element j'applique la fonction Setfigure,
+      setminiImage(works[i]);
       // aussi le travail json lui est passé en parametre (décrite à L23)
     }
   } catch (error) {
@@ -33,17 +34,6 @@ async function getWorks() {
 }
 
 getWorks(); // J'appelle la fonction getWorks L1 ce qui fait que : X
-
-function setFigure(data) {
-  //8 Je suis une fonction qui reçois les données et les convertis en html
-
-  const figure = document.createElement("figure"); //9 je crée un element HTML du nom de Figure
-
-  figure.innerHTML = `<img src =${data.imageUrl} alt${data.title}> 
-				<figcaption>${data.title}</figcaption>`; //10 j'insere le titre et l'image dans les bonnes balises
-
-  document.querySelector(".gallery").append(figure); //11 J'ajoute tout cela dans la balises html nommée Gallery
-}
 
 // donc en gros :
 // A_ Je demande les données au serveur
@@ -110,6 +100,8 @@ async function getCategories() {
     for (let i = 0; i < json.length; i++) {
       setFilter(json[i]);
       filtration(json[i]);
+      setOption(json[i]);
+      //Permet la creation de bouton et autre
     }
   } catch (error) {
     console.error(error.message);
@@ -130,10 +122,10 @@ function adminMode() {
   let token = window.localStorage.getItem("JWT_TOKEN");
   if (token) {
     // document.querySelector(".js-modal-2").style.display = "block"; // ceci est un exemple, block ne "bloque pas l'affichage il l'active le mode "bloc"
-    console.log("salut l'admin, bienvenue a la maison");
+    console.log("Mode Admin activé");
   } else {
     // document.querySelector(".js-modal-2").style.display = "none"; // sinon tu bloque
-    console.log("T'est qui toi ?");
+    console.log("Mode Invité");
   }
 }
 
@@ -142,7 +134,7 @@ adminMode();
 // modale
 
 // Get the modal
-var modal = document.getElementById("myModal");
+let modal = document.getElementById("myModal");
 
 // Get the button that opens the modal
 let btn = document.getElementById("potatosalad");
@@ -166,6 +158,15 @@ window.onclick = function (event) {
     modal.style.display = "none";
   }
 };
+
+let modalSend = document.getElementById("modalSend");
+let ajouterPhoto = document.getElementById("ajouterPhoto");
+
+ajouterPhoto.onclick = function () {
+  modalSend.style.display = "block";
+  modal.style.display = "none";
+};
+
 console.log(modal);
 console.log(btn, "le bouton marche");
 console.log(span);
@@ -173,35 +174,87 @@ console.log("Test: ", modal);
 
 // ajout de photo
 
-let ajouterPhoto = document.getElementById("ajouterPhoto");
-
 function imageModal() {
+  console.log("ImageModal Lancé");
   let dataWorks = window.localStorage.getItem("works");
   setminiImage(dataWorks);
 }
 
-function setminiImage(works) {
-  const content = document.getElementById("#content");
-  for (let i = 0; i < works.length; i++) {
-    content.innerHTML += `<img src =${works[i].imageUrl} alt${works[i].title}> 
-				<figcaption>${works[i].title}</figcaption>`;
-  }
+function setminiImage(work) {
+  console.log("setminiImage Lancé ");
+  const div = document.createElement("div");
+  div.innerHTML = `<img src =${work.imageUrl} alt${work.title}> 
+				<figcaption>${work.title}</figcaption>`;
+
+  document.getElementById("content").appendChild(div);
 }
 
-// works.forEach((element) => createElement("miniPhoto"));
-// this.appendChild("content");
+function setFigure(data) {
+  //8 Je suis une fonction qui reçois les données et les convertis en html
 
-// Pour chaque "work" création d'un child component qui sera ajouter à la div "content" afin d'afficher l'image
-// utiliser une boucle forEach pour effectuer l'action sur chaque images
-// Teapot — Today at 7:46 PM
-// liste_image.forEach((image) =>console.log(image));
-// à la place de console.log tu devras ajouter une image à la dive "content" (appendChild)
+  const figure = document.createElement("figure"); //9 je crée un element HTML du nom de Figure
 
-// je localise oû inserer les images en html, XFaitX
-// j'en fais une variable  XFaitX   c'est la variable content
-// je fait descendre les works, XFait ? X
-// je leur met une class html, (sans ça pas de carré image il me semble,puis aussi cela donnera la taille voulue)
-// j'appendChild les images works dans la variable (2 eme étape)
+  figure.innerHTML = `<img src =${data.imageUrl} alt${data.title}> 
+				<figcaption>${data.title}</figcaption>`; //10 j'insere le titre et l'image dans les bonnes balises
 
+  document.querySelector(".gallery").append(figure);
+  //11 J'ajoute tout cela dans la balises html nommée Gallery
+}
+let buttonValider = document.getElementById("buttonValider");
+buttonValider.addEventListener("click", async (event) => createWork()); //Detecte l'envoie des works
+
+function createWork() {
+  let FichierPourLePost = document.getElementById("image").files[0];
+  let workTitle = document.getElementById("inputCategorie").value;
+  let categorie = document.getElementById("selectcategories").id; //recupere l'id de la liste déroulante pour l'assigner au moment du post
+  let formData = {
+    image: FichierPourLePost,
+    title: workTitle,
+    category: categorie,
+  };
+  fetch("http://localhost:5678/api/works", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",authorization: `Bearer ${token}`",
+    },
+    body: JSON.stringify(formData),
+  })
+    .then((response) => {
+      // Quand je reçois réponse, stocke dans variable : response
+      //la reponse reçue = variable response
+      console.log(response);
+      if (!response.ok) {
+        throw new Error("utilisateur Non Reconnu");
+      }
+      return response.json(); //La derniere chose retournée on la stock dans la variable qui suit le then suivant
+      //aussi le .json permet de récuperer les données json qui accompagne la réponse
+    })
+    .then((data) => {
+      console.log(data.categorie);
+    })
+    .catch((error) => {
+      // Affichage du message d'erreur dans l'élément #errorMessage
+      document.getElementById("errorMessage").textContent = error.message;
+      document.getElementById("errorMessage").style.color = "red"; // Optionnel : mettre le texte en rouge
+    });
+}
+
+const option = document.createElement("option");
+
+function setOption(data) {
+  const option = document.createElement("option");
+  option.innerHTML = `${data.name}`;
+  option.value = `${data.name}`;
+  option.id = `${data.id}`; // pour mettre une option avec l'id
+  // .Name ici vaut dire categories
+  document.getElementById("selectcategories").append(option);
+}
 // petites étapes et petites tranches de temps correspondantes
 // noter les avancements
+//
+
+//exercices :
+// inserer le token dadns les headers de createWorks, la variable token a la ligne 218
+
+//Travailler sur l'esthethique de la modale
+//Travailler sru l'envoi de la requete de creation de works

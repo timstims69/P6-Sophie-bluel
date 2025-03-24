@@ -106,9 +106,28 @@
       <section id="portfolio">
         <h2>Mes Projets</h2>
         <!-- Trigger/Open The Modal -->
-        <button id="potatosalad" onclick="imageModal()">Open Modal</button>
+        <button onclick="imageModal()" id="potatosalad">Open Modal</button>
 
         <!-- The Modal -->
+
+        <div id="modalSend">
+          <div id="modaleSendWrapper">
+            <div id="origin" class="origin">
+              <i class="fa-regular fa-image"></i>
+              <label for="images" class="label">
+                <button class="epsilon">
+                  + Ajouter photo
+                  <input id="image" type="file" required multiple />
+                  <p class="typo">jpg,png : 4mo max</p>
+                </button>
+                <input id="inputCategorie" type="text" />
+              </label>
+              <select name="selectcategories" id="selectcategories"></select>
+              <button id="buttonValider" onclick="createWork()">Valider</button>
+            </div>
+          </div>
+        </div>
+
         <div id="myModal" class="modal">
           <!-- Modal content -->
           <div class="modal-content">

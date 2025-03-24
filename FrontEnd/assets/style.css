@@ -159,7 +159,7 @@ body {
   font-size: 14px;
   margin-top: 70px;
   /* temporaire V*/
-  background-color: grey;
+  background-color: black;
 }
 header {
   display: flex;
@@ -477,6 +477,27 @@ footer nav ul {
   background-color: white;
 }
 
+#modaleSend {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+#modaleSendWrapper {
+  overflow: auto;
+  width: 600px;
+  max-width: calc(100vh - 20px);
+  max-height: calc(100vh - 20px);
+  padding: 20px;
+  background-color: white;
+}
+
 .file-section {
   background-color: #e8f1f6;
   display: flex;
@@ -514,4 +535,40 @@ footer nav ul {
 .miniImage {
   width: 10%;
   height: 10%;
+}
+
+.origin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 170px;
+}
+input[type="file"] {
+  z-index: 1;
+  position: relative;
+  bottom: 30px;
+  right: 10px;
+  opacity: 0;
+}
+
+.epsilon {
+  z-index: 0;
+  font-weight: bold;
+  width: 173px;
+  height: 36px;
+  border-radius: 25px;
+  justify-content: center;
+  text-align: center;
+  background: #b5c4cf;
+  border-color: #39595f;
+  border: 1px;
+  color: #39595f;
+}
+.typo {
+  position: relative;
+  bottom: 20px;
+  font-size: 10px;
+  text-align: center;
+  color: black;
 }
