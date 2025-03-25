@@ -110,31 +110,39 @@ async function getCategories() {
 
 getCategories();
 
-// coder c'est comme etre un chef d'orchestre, pas besoin de savoir exactement comment jouer chaque instrument,
-//il suffit de les comprendre pour les harmoniser
-
 //----------------------------------------------------------------------------------
 //                              _Mode Admin_
 
 // Ici je veut faire en sorte que le site détecte si l'admin est connecté ou pas
+let adminModeBanner = document.getElementById("adminModeBanner");
+let logoutButton = document.getElementById("logoutButton");
+let loginButton = document.getElementById("loginButton");
+let token = window.localStorage.getItem("JWT_TOKEN");
 
-function adminMode() {
-  let token = window.localStorage.getItem("JWT_TOKEN");
-  if (token) {
-    // document.querySelector(".js-modal-2").style.display = "block"; // ceci est un exemple, block ne "bloque pas l'affichage il l'active le mode "bloc"
-    console.log("Mode Admin activé");
-  } else {
-    // document.querySelector(".js-modal-2").style.display = "none"; // sinon tu bloque
-    console.log("Mode Invité");
-  }
+if (token) {
+  loginButton.innerHTML = "logout";
+  loginButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    console.log("mode admin desactivé");
+    localStorage.clear();
+    window.location.replace("./index.html");
+  });
+  console.log("Mode Admin activé");
+} else {
+  adminModeBanner.style.display = "none";
+  loginButton.innerHTML = "login";
+
+  loginButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    window.location.replace("./login.html");
+  });
+  console.log("Mode Invité");
 }
-
-adminMode();
 
 // modale
 
 // Get the modal
-let modal = document.getElementById("myModal");
+let modal = document.getElementsByClassName("modal-content");
 
 // Get the button that opens the modal
 let btn = document.getElementById("potatosalad");
@@ -144,6 +152,7 @@ var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks the button, open the modal
 btn.onclick = function () {
+  let modal = document.getElementsByClassName("modal-content");
   modal.style.display = "block";
 };
 
@@ -166,11 +175,6 @@ ajouterPhoto.onclick = function () {
   modalSend.style.display = "block";
   modal.style.display = "none";
 };
-
-console.log(modal);
-console.log(btn, "le bouton marche");
-console.log(span);
-console.log("Test: ", modal);
 
 // ajout de photo
 
@@ -212,10 +216,14 @@ function createWork() {
     title: workTitle,
     category: categorie,
   };
+
+  let token = window.localStorage.getItem("JWT_TOKEN");
+  console.log(token);
   fetch("http://localhost:5678/api/works", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",authorization: `Bearer ${token}`",
+      accept: "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(formData),
   })
@@ -233,9 +241,7 @@ function createWork() {
       console.log(data.categorie);
     })
     .catch((error) => {
-      // Affichage du message d'erreur dans l'élément #errorMessage
-      document.getElementById("errorMessage").textContent = error.message;
-      document.getElementById("errorMessage").style.color = "red"; // Optionnel : mettre le texte en rouge
+      console.log("erreur dans la requete post");
     });
 }
 
@@ -254,7 +260,6 @@ function setOption(data) {
 //
 
 //exercices :
-// inserer le token dadns les headers de createWorks, la variable token a la ligne 218
-
 //Travailler sur l'esthethique de la modale
-//Travailler sru l'envoi de la requete de creation de works
+//Positioner le button modifer et faire en sorte qu'il affiche la modale
+//Le bouton modifier ne s'affiche que si on est admin

@@ -38,6 +38,3 @@ function login() {
 // Pour plus tard :
 // sert a enlever le token du local storage
 // sinon il reste lealmé almaya
-function logout() {
-  localStorage.removeItem("JWT_TOKEN");
-}
