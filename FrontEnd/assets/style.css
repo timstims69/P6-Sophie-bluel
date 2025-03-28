@@ -593,7 +593,7 @@ body {
 }
 
 /* Modal Content */
-.modal-content {
+#modal-content {
   background-color: #fefefe;
   margin: auto;
   padding: 20px;
@@ -615,4 +615,13 @@ body {
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+
+#modalSend {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  display: none;
 }

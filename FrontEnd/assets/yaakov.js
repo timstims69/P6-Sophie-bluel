@@ -142,8 +142,8 @@ if (token) {
 // modale
 
 // Get the modal
-let modal = document.getElementsByClassName("modal-content");
-
+let modal = document.getElementById("modal-content");
+ console.log(modal)
 // Get the button that opens the modal
 let btn = document.getElementById("potatosalad");
 
@@ -152,7 +152,7 @@ var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks the button, open the modal
 btn.onclick = function () {
-  let modal = document.getElementsByClassName("modal-content");
+  let modal = document.getElementById("modal-content");
   modal.style.display = "block";
 };
 
