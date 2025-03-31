@@ -142,8 +142,8 @@ if (token) {
 // modale
 
 // Get the modal
-let modal = document.getElementById("modal-content");
- console.log(modal)
+let modal = document.getElementById("modalSend");
+
 // Get the button that opens the modal
 let btn = document.getElementById("potatosalad");
 
@@ -152,13 +152,15 @@ var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks the button, open the modal
 btn.onclick = function () {
-  let modal = document.getElementById("modal-content");
-  modal.style.display = "block";
+  let modaleGalerie = document.getElementById("modaleGalerie");
+  let modalGaleriecontent = document.getElementById("modalGaleriecontent");
+  modaleGalerie.style.display = "block";
+  modalGaleriecontent.style.display = "block";
 };
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function () {
-  modal.style.display = "none";
+  modaleGalerie.style.display = "none";
 };
 
 // When the user clicks anywhere outside of the modal, close it
@@ -168,12 +170,12 @@ window.onclick = function (event) {
   }
 };
 
-let modalSend = document.getElementById("modalSend");
+let modalCreatework = document.getElementById("modalCreatework");
 let ajouterPhoto = document.getElementById("ajouterPhoto");
 
 ajouterPhoto.onclick = function () {
-  modalSend.style.display = "block";
-  modal.style.display = "none";
+  modalCreatework.style.display = "block";
+  modaleGalerie.style.display = "none";
 };
 
 // ajout de photo
@@ -185,24 +187,26 @@ function imageModal() {
 }
 
 function setminiImage(work) {
-  console.log("setminiImage Lancé ");
   const div = document.createElement("div");
-  div.innerHTML = `<img src =${work.imageUrl} alt${work.title}> 
-				<figcaption>${work.title}</figcaption>`;
-
-  document.getElementById("content").appendChild(div);
+  const img = document.createElement("img");
+  const i = document.createElement("i");
+  img.src = work.imageUrl;
+  img.alt = work.title;
+  img.classList.add("imageModal");
+  div.classList.add("imageModalContainer");
+  i.classList.add("fa-trash", "fa-solid");
+  div.appendChild(img);
+  div.appendChild(i);
+  document.getElementById("galerie-photo").appendChild(div);
 }
 
 function setFigure(data) {
-  //8 Je suis une fonction qui reçois les données et les convertis en html
-
-  const figure = document.createElement("figure"); //9 je crée un element HTML du nom de Figure
+  const figure = document.createElement("figure");
 
   figure.innerHTML = `<img src =${data.imageUrl} alt${data.title}> 
-				<figcaption>${data.title}</figcaption>`; //10 j'insere le titre et l'image dans les bonnes balises
+				<figcaption>${data.title}</figcaption>`;
 
   document.querySelector(".gallery").append(figure);
-  //11 J'ajoute tout cela dans la balises html nommée Gallery
 }
 let buttonValider = document.getElementById("buttonValider");
 buttonValider.addEventListener("click", async (event) => createWork()); //Detecte l'envoie des works
@@ -263,3 +267,6 @@ function setOption(data) {
 //Travailler sur l'esthethique de la modale
 //Positioner le button modifer et faire en sorte qu'il affiche la modale
 //Le bouton modifier ne s'affiche que si on est admin
+
+//histamesh hadere'h hah'azaka l'aavod kmo shetsari'h, et explorer cette idée, tezah'er ma
+//shekara leh'a baavoda im ahou a h'azak, ma sheh'aser mimeh'a :  zo hi a "kashiout"
