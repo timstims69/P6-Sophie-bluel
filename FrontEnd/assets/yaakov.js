@@ -149,8 +149,8 @@ let modal = document.getElementById("modaleGalerie");
 let btn = document.getElementById("potatosalad");
 
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
+let span = document.getElementById("span");
+let span2 = document.getElementById("span2");
 // When the user clicks the button, open the modal
 btn.onclick = function () {
   let modaleGalerie = document.getElementById("modaleGalerie");
@@ -164,6 +164,9 @@ span.onclick = function () {
   modaleGalerie.style.display = "none";
 };
 
+span2.onclick = function () {
+  modalCreatework.style.display = "none";
+};
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
   if (event.target == modal) {
