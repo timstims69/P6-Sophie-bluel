@@ -239,6 +239,7 @@ li:hover {
 }
 #portfolio h2 {
   text-align: center;
+  padding: 15px;
 }
 
 .js-modal-2 {
@@ -279,8 +280,7 @@ li:hover {
 
 .gallery img {
   width: 100%;
-  height: 500px;
-  overflow: hidden;
+
   object-fit: cover;
 }
 
@@ -537,42 +537,6 @@ footer nav ul {
   height: 10%;
 }
 
-.origin {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 170px;
-}
-input[type="file"] {
-  z-index: 1;
-  position: relative;
-  bottom: 30px;
-  right: 10px;
-  opacity: 0;
-}
-
-.epsilon {
-  z-index: 0;
-  font-weight: bold;
-  width: 173px;
-  height: 36px;
-  border-radius: 25px;
-  justify-content: center;
-  text-align: center;
-  background: #b5c4cf;
-  border-color: #39595f;
-  border: 1px;
-  color: #39595f;
-}
-.typo {
-  position: relative;
-  bottom: 20px;
-  font-size: 10px;
-  text-align: center;
-  color: black;
-}
-
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -588,11 +552,6 @@ body {
   background-color: rgba(0, 0, 0, 0.4);
   width: 100%;
   height: 100%;
-}
-
-#modalCreatework {
-  display: none;
-  position: fixed;
 }
 
 /* Modal Content */
@@ -653,8 +612,8 @@ body {
 }
 
 .imageModalContainer {
-  width: 20%;
-  height: 20%;
+  width: 100%;
+  height: 100%;
 }
 
 .fa-trash {
@@ -684,4 +643,68 @@ body {
 }
 #galerie-photo div {
   position: relative;
+}
+
+#ajouterPhoto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  text-align: center; /* Assure le centrage du texte */
+  width: 237px;
+  height: 36px;
+  background-color: #1d6154; /* Couleur de fond */
+  color: white; /* Couleur du texte */
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  margin: auto;
+  margin-bottom: 25px;
+  margin-top: 25px;
+}
+
+#ajouterPhoto p {
+  margin: 0; /* Supprime les marges par défaut du paragraphe */
+  padding: 0;
+}
+
+#modalCreatework {
+  display: none;
+  position: fixed;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100%;
+}
+
+#modaleCreateworkWrapper {
+  background-color: white;
+  width: 50%;
+  border-radius: 10px;
+  position: relative;
+  max-width: 600px;
+  max-height: calc(100% - 50px);
+  overflow: auto;
+  margin: auto;
+}
+
+.origin {
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 170px; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+input[type="file"] {
+  z-index: 1;
+  position: relative;
+  bottom: 30px;
+  right: 10px;
+  opacity: 0;
 }

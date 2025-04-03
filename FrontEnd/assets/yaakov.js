@@ -18,14 +18,15 @@ async function getWorks() {
     // Vérification des données // 3 Les données reçues du serveur est  converti en JSON,
     // la propriétée response représente la reponse du serv ensuite, .json coverti en json
     // aussi await ici veut idre que j'attend la réponse du serveur avant de la process
-    window.localStorage.setItem("works", works);
+    window.localStorage.setItem("works", JSON.stringify(works)); //IA Le localStorage ne peut stocker des que des Chaines de charactère
     // 4 J'affiche les données dans la console, pour que je puisse les voir perso
 
     for (let i = 0; i < works.length; i++) {
       //5 Si y'a plusieur éléments dans les données, je boucle et donc les select 1 à 1
-
-      setFigure(works[i]); //6 Pour chaque element j'applique la fonction Setfigure,
       setminiImage(works[i]);
+      setFigure(works[i]);
+      //6 Pour chaque element j'applique la fonction Setfigure,
+
       // aussi le travail json lui est passé en parametre (décrite à L23)
     }
   } catch (error) {
@@ -201,6 +202,7 @@ function setminiImage(work) {
 }
 
 function setFigure(data) {
+  console.log("setFigure est lancé");
   const figure = document.createElement("figure");
 
   figure.innerHTML = `<img src =${data.imageUrl} alt${data.title}> 
