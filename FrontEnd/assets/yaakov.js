@@ -143,7 +143,7 @@ if (token) {
 // modale
 
 // Get the modal
-let modal = document.getElementById("modalSend");
+let modal = document.getElementById("modaleGalerie");
 
 // Get the button that opens the modal
 let btn = document.getElementById("potatosalad");
@@ -167,9 +167,14 @@ span.onclick = function () {
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
   if (event.target == modal) {
-    modal.style.display = "none";
+      modal.style.display = "none";
+  }
+  if (event.target == modalCreatework) {
+      modalCreatework.style.display = "none";
   }
 };
+
+
 
 let modalCreatework = document.getElementById("modalCreatework");
 let ajouterPhoto = document.getElementById("ajouterPhoto");

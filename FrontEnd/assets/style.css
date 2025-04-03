@@ -682,13 +682,13 @@ body {
 
 #modaleCreateworkWrapper {
   background-color: white;
-  width: 50%;
-  border-radius: 10px;
   position: relative;
-  max-width: 600px;
-  max-height: calc(100% - 50px);
   overflow: auto;
   margin: auto;
+  width: 600px;
+  height: 600px;
+   border-radius: 10px;
+
 }
 
 .origin {
