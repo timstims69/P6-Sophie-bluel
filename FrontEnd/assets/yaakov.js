@@ -170,14 +170,12 @@ span2.onclick = function () {
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
   if (event.target == modal) {
-      modal.style.display = "none";
+    modal.style.display = "none";
   }
   if (event.target == modalCreatework) {
-      modalCreatework.style.display = "none";
+    modalCreatework.style.display = "none";
   }
 };
-
-
 
 let modalCreatework = document.getElementById("modalCreatework");
 let ajouterPhoto = document.getElementById("ajouterPhoto");
@@ -224,35 +222,36 @@ buttonValider.addEventListener("click", async (event) => createWork()); //Detect
 function createWork() {
   let FichierPourLePost = document.getElementById("image").files[0];
   let workTitle = document.getElementById("inputCategorie").value;
-  let categorie = document.getElementById("selectcategories").id; //recupere l'id de la liste déroulante pour l'assigner au moment du post
+  let categorie = document.getElementById("selectcategories").value; //recupere l'id de la liste déroulante pour l'assigner au moment du post
   let formData = {
     image: FichierPourLePost,
     title: workTitle,
     category: categorie,
   };
-
+  const data = new FormData();
+  data.append("title", workTitle);
+  data.append("image", FichierPourLePost);
+  data.append("category", categorie);
   let token = window.localStorage.getItem("JWT_TOKEN");
-  console.log(token);
+  console.log(formData);
   fetch("http://localhost:5678/api/works", {
     method: "POST",
     headers: {
       accept: "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(formData),
+    body: data,
   })
     .then((response) => {
       // Quand je reçois réponse, stocke dans variable : response
       //la reponse reçue = variable response
       console.log(response);
-      if (!response.ok) {
-        throw new Error("utilisateur Non Reconnu");
+      if (response.ok) {
+        console.log("works ajouté");
+        document.getElementById("modalCreatework").style.display = "none";
       }
       return response.json(); //La derniere chose retournée on la stock dans la variable qui suit le then suivant
       //aussi le .json permet de récuperer les données json qui accompagne la réponse
-    })
-    .then((data) => {
-      console.log(data.categorie);
     })
     .catch((error) => {
       console.log("erreur dans la requete post");
@@ -264,11 +263,12 @@ const option = document.createElement("option");
 function setOption(data) {
   const option = document.createElement("option");
   option.innerHTML = `${data.name}`;
-  option.value = `${data.name}`;
+  option.value = `${data.id}`;
   option.id = `${data.id}`; // pour mettre une option avec l'id
   // .Name ici vaut dire categories
   document.getElementById("selectcategories").append(option);
 }
+
 // petites étapes et petites tranches de temps correspondantes
 // noter les avancements
 //
@@ -280,3 +280,5 @@ function setOption(data) {
 
 //histamesh hadere'h hah'azaka l'aavod kmo shetsari'h, et explorer cette idée, tezah'er ma
 //shekara leh'a baavoda im ahou a h'azak, ma sheh'aser mimeh'a :  zo hi a "kashiout"
+
+//mh zh FormData
