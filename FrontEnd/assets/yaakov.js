@@ -53,6 +53,7 @@ function setFilter(data) {
   const div = document.createElement("div");
   div.innerHTML = `${data.name}`;
   div.id = sanitizeId(data.name); // Utilise l'ID nettoyé
+
   document.querySelector(".div-container").append(div);
 }
 
@@ -202,8 +203,11 @@ function setminiImage(work) {
   img.classList.add("imageModal");
   div.classList.add("imageModalContainer");
   i.classList.add("fa-trash", "fa-solid");
+  i.addEventListener("click", async (event) => deleteWork(work.id));
   div.appendChild(img);
+
   div.appendChild(i);
+  div.id = "mini-" + work.id;
   document.getElementById("galerie-photo").appendChild(div);
 }
 
@@ -267,6 +271,24 @@ function setOption(data) {
   option.id = `${data.id}`; // pour mettre une option avec l'id
   // .Name ici vaut dire categories
   document.getElementById("selectcategories").append(option);
+}
+
+//Fonction delete
+
+function deleteWork(id) {
+  fetch("http://localhost:5678/api/works/" + `${id}`, {
+    method: "DELETE",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((response) => {
+    console.log(response);
+    if (response.ok) {
+      document.getElementById("mini-" + `${id}`).remove();
+    }
+  });
+  element.remove(id);
 }
 
 // petites étapes et petites tranches de temps correspondantes
