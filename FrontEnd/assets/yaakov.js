@@ -25,6 +25,7 @@ async function getWorks() {
       //5 Si y'a plusieur éléments dans les données, je boucle et donc les select 1 à 1
       setminiImage(works[i]);
       setFigure(works[i]);
+
       //6 Pour chaque element j'applique la fonction Setfigure,
 
       // aussi le travail json lui est passé en parametre (décrite à L23)
@@ -217,7 +218,7 @@ function setFigure(data) {
 
   figure.innerHTML = `<img src =${data.imageUrl} alt${data.title}> 
 				<figcaption>${data.title}</figcaption>`;
-
+  figure.id = "figure-" + data.id;
   document.querySelector(".gallery").append(figure);
 }
 let buttonValider = document.getElementById("buttonValider");
@@ -286,6 +287,7 @@ function deleteWork(id) {
     console.log(response);
     if (response.ok) {
       document.getElementById("mini-" + `${id}`).remove();
+      document.getElementById("figure-" + `${id}`).remove();
     }
   });
   element.remove(id);
